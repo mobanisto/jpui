@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<project>
+  <pomVersion>3</pomVersion>
+  <name>jpui</name>
+  <id>jpui</id>
+  <currentVersion>0.2</currentVersion>
+  <inceptionYear>2003</inceptionYear>
+  <package/>
+  <shortDescription>Java Preferences User Interface</shortDescription>
+  <description>
+Java Preferences Browser. Java/Swing based tool to browse and edit java preferences created via the java.util.prefs package.
+  </description>
+  <url>http://www.sourceforce.net/projects/jpui</url>
+  <issueTrackingUrl>http://sourceforge.net/tracker/?group_id=88602</issueTrackingUrl>
+  <repository>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jpui:jpui</connection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/jpui/</url>
+  </repository>
+
+  <mailingLists>
+    <mailingList>
+      <name>jpui-users</name>
+      <subscribe>http://lists.sourceforge.net/lists/listinfo/jpui-users</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/lists/listinfo/jpui-users</unsubscribe>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum=jpui-users</archive>
+    </mailingList>
+    <mailingList>
+      <name>jpui-development</name>
+      <subscribe>http://lists.sourceforge.net/lists/listinfo/jpui-development</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/lists/listinfo/jpui-development</unsubscribe>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum=jpui-development</archive>
+    </mailingList>
+  </mailingLists>
+  <licenses>
+    <license>
+      <name>GPL</name>
+      <url>http://www.gnu.org/copyleft/gpl.html</url>
+    </license>
+  </licenses>
+
+ 
+  <developers>
+    <developer>
+      <name>Mark</name>
+      <id>macksold</id>
+      <email>macksold@users.sourceforge.net</email>
+      <organization/>
+    </developer>
+  </developers>
+
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
+</project>
+  
