@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <name>jpui</name>
   <id>jpui</id>
-  <currentVersion>0.2</currentVersion>
+  <currentVersion>0.3.0</currentVersion>
   <inceptionYear>2003</inceptionYear>
   <package/>
   <shortDescription>Java Preferences User Interface</shortDescription>
@@ -50,8 +50,17 @@ Java Preferences Browser. Java/Swing based tool to browse and edit java preferen
     </developer>
   </developers>
 
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <unitTestSourceDirectory>test</unitTestSourceDirectory>
   </build>
 </project>
   
