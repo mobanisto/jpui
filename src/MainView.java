@@ -2,8 +2,8 @@
  * MainView
  *
  * $RCSfile: MainView.java,v $
- * $Revision: 1.1 $
- * $Date: 2003/10/05 15:03:40 $
+ * $Revision: 1.2 $
+ * $Date: 2004/01/01 17:41:45 $
  * $Source: /cvsroot/jpui/jpui/src/MainView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -25,7 +25,7 @@
  * 
  * Author: macksold@users.sourceforge.net
  */
- 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -36,42 +36,72 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- * view that is responsible for menu commands
+ * View that is responsible for menu commands
+ * Delegates menu command implementation to the relevant view
  */
 public class MainView implements Observer, ActionListener {
-	private PrefModel moPrefModel;
+    // menu bar
     private JMenuBar moMenuBar;
-    
-	/**
-	 * @param oModel
-	 */
-	public MainView(PrefModel oModel) {
-		moPrefModel = JPUI.getPrefModel();
-		moPrefModel.addObserver(this);
-        
-        initMenu();
-	}
 
+    // menu action commands
+    private static final String EXIT = "exit";
+    private static final String NODE_NEW = "node_new";
+    private static final String NODE_DELETE = "node_delete";
+    private static final String KEY_NEW = "key_new";
+    private static final String KEY_DELETE = "key_delete";
+
+    // references to views which will perform the work
+    // associated with the menu items
+    private TreeView moTreeView;
+    private EditNodeView moEditNodeView;
+
+    /**
+     * @param oModel
+     */
+    public MainView(TreeView oTreeView, EditNodeView oEditNodeView) {
+        moTreeView = oTreeView;
+        moEditNodeView = oEditNodeView;
+        initMenu();
+        PreferencesModel.Instance().addObserver(this);
+    }
+
+    /**
+     * Populate the menu
+     */
     protected void initMenu() {
-        moMenuBar = new JMenuBar(); 
-        JMenu oMenu = new JMenu("File");
-        JMenuItem oMenuItem = new JMenuItem("Exit");
-        oMenuItem.setActionCommand("exit");
+        moMenuBar = new JMenuBar();
+        JMenu oMenu = new JMenu(Resources.getString("menu_file"));
+        JMenuItem oMenuItem = new JMenuItem(Resources.getString("file_exit"));
+        oMenuItem.setActionCommand(EXIT);
         oMenuItem.addActionListener(this);
         oMenu.add(oMenuItem);
-        
+
+        moMenuBar.add(oMenu);
+
+        // add/delete nodes from current node
+        oMenu = new JMenu(Resources.getString("menu_node"));
+        oMenuItem = new JMenuItem(Resources.getString("node_new"));
+        oMenuItem.setActionCommand(NODE_NEW);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
+        oMenuItem = new JMenuItem(Resources.getString("node_delete"));
+        oMenuItem.setActionCommand(NODE_DELETE);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
+        moMenuBar.add(oMenu);
+
+        // add/delete keys on current node
+        oMenu = new JMenu(Resources.getString("menu_attribute"));
+        oMenuItem = new JMenuItem(Resources.getString("attribute_new"));
+        oMenuItem.setActionCommand(KEY_NEW);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
+        oMenuItem = new JMenuItem(Resources.getString("attribute_delete"));
+        oMenuItem.setActionCommand(KEY_DELETE);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
         moMenuBar.add(oMenu);
     }
-    
-	/**
-     * The model has changed, update the view, this may
-     * enable/disable menu items at some point
-     * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	public void update(Observable arg0, Object arg1) {
-
-	}
 
     /**
      * @return
@@ -86,8 +116,28 @@ public class MainView implements Observer, ActionListener {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("exit")) {
+        if (e.getActionCommand().equals(EXIT)) {
             System.exit(0);
         }
+        else if (e.getActionCommand().equals(NODE_NEW)) {
+            moTreeView.newNode();
+        }
+        else if (e.getActionCommand().equals(NODE_DELETE)) {
+            moTreeView.deleteNode();
+        }
+        else if (e.getActionCommand().equals(KEY_NEW)) {
+            moEditNodeView.newKey();
+        }
+        else if (e.getActionCommand().equals(KEY_DELETE)) {
+            moEditNodeView.deleteKey();
+        }
     }
+
+    /**
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    public void update(Observable o, Object arg) {
+
+    }
+
 }

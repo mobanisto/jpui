@@ -2,8 +2,8 @@
  * EditNodeView
  *
  * $RCSfile: EditNodeView.java,v $
- * $Revision: 1.1 $
- * $Date: 2003/10/05 15:03:40 $
+ * $Revision: 1.2 $
+ * $Date: 2004/01/01 17:41:45 $
  * $Source: /cvsroot/jpui/jpui/src/EditNodeView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -28,14 +28,11 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.prefs.Preferences;
 
-import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -44,80 +41,76 @@ import javax.swing.JTable;
  * the current preference node.
  */
 public class EditNodeView implements Observer {
-	private JPanel moPanel;
-	private JTable moTable;
-	private JButton moCancel;
-	private JButton moSave;
-	private PrefModel moPrefModel;
-    
-	/**
-	 * @param oModel
-	 */
-	public EditNodeView(PrefModel oModel) {
-		moPrefModel = JPUI.getPrefModel();
-		moPrefModel.addObserver(this);
-		
-		moPanel = new JPanel();
-		moPanel.setLayout(new BorderLayout());
-		
-		JButton moSave = new JButton("Save");
-        moSave.setActionCommand("save");
-		JButton moCancel = new JButton("Cancel");
-        moCancel.setActionCommand("cancel");
+    private JPanel moPanel;
+    private JTable moTable;
 
-        // TODO save and cancel node functionality
-		ActionListener oButtonListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(e.getActionCommand().equals("save")) {
-				}
-				else if(e.getActionCommand().equals("cancel")) {
-				}
-			}
-		};
+    /**
+     * @param oModel
+     */
+    public EditNodeView() {
+        moPanel = new JPanel();
+        moPanel.setLayout(new BorderLayout());
+        moTable = new JTable();
 
-		moSave.addActionListener(oButtonListener);
-		moCancel.addActionListener(oButtonListener);
-		
-		moSave.setEnabled(false);
-		moCancel.setEnabled(false);
-		
-		JPanel oBottom = new JPanel();
-		oBottom.setLayout(new FlowLayout());
-        // TODO put these in when they do something
-		// oBottom.add(moCancel);
-		// oBottom.add(moSave);
-		
-		moPanel.add(oBottom, BorderLayout.SOUTH);
-		renderTable();
-	}
+        PreferencesModel.Instance().addObserver(this);
+        renderTable();
+    }
 
-	public JPanel getPanel() {
-		return moPanel;
-	}
-	
-	/**
-     * Uddate the table with the currently selected
-     * preference node.
-     * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	public void update(Observable oObs, Object oArg) {
-		moPanel.remove(moTable.getTableHeader());
-		moPanel.remove(moTable);
-		renderTable();
-	}
+    /**
+     * @return
+     */
+    public JPanel getPanel() {
+        return moPanel;
+    }
 
-	/**
+    /**
      * Retrieves the current node from the model and
      * renders it via a JTable.
      */
     private void renderTable() {
-		Preferences oPref = moPrefModel.getCurrentNode();
-		moTable = new JTable(new PrefNodeTable(oPref));
-		moTable.setShowGrid(true);
-		moTable.setGridColor(Color.LIGHT_GRAY);
-		moPanel.add(moTable.getTableHeader(), BorderLayout.NORTH);
-		moPanel.add(moTable, BorderLayout.CENTER);		
-		moPanel.validate();
-	}
+        Preferences oPref = PreferencesModel.Instance().getCurrentNode();
+
+        moPanel.remove(moTable.getTableHeader());
+        moPanel.remove(moTable);
+        moTable = new JTable(new PreferencesNodeTable(oPref));
+        moTable.setShowGrid(true);
+        moTable.setGridColor(Color.LIGHT_GRAY);
+        moPanel.add(moTable.getTableHeader(), BorderLayout.NORTH);
+        moPanel.add(moTable, BorderLayout.CENTER);
+        moPanel.validate();
+    }
+
+    /**
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    public void update(Observable oObject, Object oArg) {
+        renderTable();
+    }
+
+    /**
+     * prompts for and creates a new attribute key for the
+     * currently selected node
+     */
+    public void newKey() {
+        String sNewKey =
+            JOptionPane.showInputDialog(
+                moPanel.getParent(),
+                Resources.getString("new_attr_message"),
+                Resources.getString("new_attr_title"),
+                JOptionPane.QUESTION_MESSAGE);
+        if (sNewKey != null) {
+            PreferencesModel.Instance().setAttribute(sNewKey, "");
+        }
+    }
+
+    /**
+     * Deletes the currently selected attribute
+     */
+    public void deleteKey() {
+        int nRow = moTable.getSelectedRow();
+        String sKey = moTable.getValueAt(nRow, 0).toString();
+        if (sKey != null) {
+            PreferencesModel.Instance().removeAttribute(sKey);
+        }
+    }
 }

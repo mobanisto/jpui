@@ -2,8 +2,8 @@
  * JPUI
  *
  * $RCSfile: JPUI.java,v $
- * $Revision: 1.1 $
- * $Date: 2003/10/05 15:03:40 $
+ * $Revision: 1.2 $
+ * $Date: 2004/01/01 17:41:45 $
  * $Source: /cvsroot/jpui/jpui/src/JPUI.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -42,111 +42,84 @@ import javax.swing.JSplitPane;
  * Builds the model, the views, and lays out the GUI
  */
 public class JPUI {
-	// singleton the app
-	private static JPUI moPrefGUI = null;
-	
-	// data model
-	private static PrefModel moPrefModel;
-	
-	// views
-	private MainView moMainView;
-	private TreeView moTreeView;
-	private EditNodeView moEditNodeView;
-	
-	// gui parts
-	private static JFrame moFrame = null;
-	private static JPanel moContentPanel = null;
-	
-	public JPUI() {
-		// the app
-		moPrefGUI = this;
-		initialize();		
-	}
-	
-	/**
+    // views
+    private MainView moMainView;
+    private TreeView moTreeView;
+    private EditNodeView moEditNodeView;
+
+    // gui parts
+    private static JFrame moFrame = null;
+    private static JPanel moContentPanel = null;
+
+    public JPUI() {
+        initialize();
+    }
+
+    /**
      * Construct and put together the model, views,
      * and UI components
      */
     private void initialize() {
-		// the data
-		moPrefModel = new PrefModel();
-		
-		// the views
-		moMainView = new MainView(moPrefModel);
-		moTreeView = new TreeView(moPrefModel);
-		moEditNodeView = new EditNodeView(moPrefModel);
-		
-		//
-		// the gui
-		//
-		
-		// main frame
-		moFrame = new JFrame("JPUI");
-		moFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		moFrame.addWindowListener(
-			new WindowAdapter() {
-				public void windowClosing(WindowEvent oEv) {
-					System.exit(0);
-				}
-			});
-			        
+        // the views
+        moTreeView = new TreeView();
+        moEditNodeView = new EditNodeView();
+        moMainView = new MainView(moTreeView, moEditNodeView);
+
+        //
+        // the gui
+        //
+
+        // main frame
+        moFrame = new JFrame(Resources.getString("title_bar"));
+        moFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        moFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent oEv) {
+                System.exit(0);
+            }
+        });
+
         // menu
         moFrame.setJMenuBar(moMainView.getMenuBar());
-        
-		// content panel and tool bar
-		moContentPanel = new JPanel();
-		moContentPanel.setLayout(new BorderLayout());
-		moContentPanel.setPreferredSize(
-			new Dimension(600, 500));
-			
-		moFrame.setContentPane(moContentPanel);
-		
-		// the main view
-		JScrollPane oTreePane = new JScrollPane(
-			moTreeView.getPanel());
-		JScrollPane oEditNodePane = new JScrollPane(
-			moEditNodeView.getPanel());
-		JSplitPane oSplitPane = new JSplitPane(
-			JSplitPane.HORIZONTAL_SPLIT,
-			oTreePane, oEditNodePane);
+
+        // content panel and tool bar
+        moContentPanel = new JPanel();
+        moContentPanel.setLayout(new BorderLayout());
+        moContentPanel.setPreferredSize(new Dimension(600, 500));
+
+        moFrame.setContentPane(moContentPanel);
+
+        // the main view
+        JScrollPane oTreePane = new JScrollPane(moTreeView.getPanel());
+        JScrollPane oEditNodePane = new JScrollPane(moEditNodeView.getPanel());
+        JSplitPane oSplitPane =
+            new JSplitPane(
+                JSplitPane.HORIZONTAL_SPLIT,
+                oTreePane,
+                oEditNodePane);
         oSplitPane.setDividerLocation(200);
-		moContentPanel.add(oSplitPane, BorderLayout.CENTER);
-	}
-	
-	/**
-	 * @return
-	 */
-	public static JPanel getContentPanel() {
-		return moContentPanel;
-	}
+        moContentPanel.add(oSplitPane, BorderLayout.CENTER);
+    }
 
-	/**
-	 * @return
-	 */
-	public static JFrame getFrame() {
-		return moFrame;
-	}
-
-	/**
-	 * @return
-	 */
-	public static JPUI getPrefGUI() {
-		return moPrefGUI;
-	}
-
-	/**
-	 * @return
-	 */
-	public static PrefModel getPrefModel() {
-		return moPrefModel;
-	}
-
-	/**
-     * @param args
+    /**
+     * @return
      */
-    public static void main(String[] args) {
-		final JPUI oPrefGUI = new JPUI();
-		JPUI.getFrame().pack();
-		JPUI.getFrame().setVisible(true);
-	}
+    public static JPanel getContentPanel() {
+        return moContentPanel;
+    }
+
+    /**
+     * @return
+     */
+    public static JFrame getFrame() {
+        return moFrame;
+    }
+
+    /**
+     * @param oArgs
+     */
+    public static void main(String[] oArgs) {
+        final JPUI oPrefGUI = new JPUI();
+        JPUI.getFrame().pack();
+        JPUI.getFrame().setVisible(true);
+    }
 }
