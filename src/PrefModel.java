@@ -2,8 +2,8 @@
  * PrefModel
  *
  * $RCSfile: PrefModel.java,v $
- * $Revision: 1.1 $
- * $Date: 2003/10/05 15:03:40 $
+ * $Revision: 1.2 $
+ * $Date: 2003/10/05 17:13:28 $
  * $Source: /cvsroot/jpui/jpui/src/Attic/PrefModel.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -104,4 +104,68 @@ public class PrefModel extends Observable {
 			notifyObservers();
 		}
 	}
+    
+    /**
+     * Create a new node named sNodeName
+     * as a child of the current node.
+     * 
+     * @param sNodeName
+     * @return
+     */
+    public Preferences newNode(String sNodeName) {
+        Preferences oNewNode = getCurrentNode().node(sNodeName);
+
+        setCurrentNode(oNewNode);
+        return oNewNode;
+    }
+    
+    /**
+     * Delete the current node and set its
+     * parent to be the new current node
+     * 
+     * @throws Exception
+     */
+    public void deleteNode()
+        throws Exception {
+        Preferences oCurrent = getCurrentNode();
+        Preferences oParent = oCurrent.parent();
+        
+        oCurrent.removeNode();
+        setCurrentNode(oParent);
+    }
+
+    /**
+     * Renames the currently selected node
+     * 
+     * TODO
+     * Looks like we have to get fancy with exportPreferences
+     * and importPreferences if we want to rename a node that
+     * has children. For now, require the node to be a leaf.
+     * 
+     * @param newName
+     */    
+    public void renameNode(String newName)
+        throws Exception {
+        Preferences oCurrent = getCurrentNode();
+        if(oCurrent.childrenNames().length > 0) {
+            throw new Exception("Node must not have children to be renamed");
+        }
+        
+        // TODO copy the keys and values from old node to new node
+        Preferences oParent = oCurrent.parent();
+        oCurrent.removeNode();
+        oCurrent = oParent.node(newName);
+        
+        setCurrentNode(oCurrent);            
+    }
+    
+    public void addKey(String sKey, String sValue) {
+        setValue(sKey,sValue);
+    }
+    public void deleteKey(String sKey) {
+        getCurrentNode().remove(sKey);
+    }
+    public void setValue(String sKey, String sValue) {
+        getCurrentNode().put(sKey, sValue);
+    }
 }
