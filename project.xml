@@ -10,8 +10,10 @@
   <description>
 Java Preferences Browser. Java/Swing based tool to browse and edit java preferences created via the java.util.prefs package.
   </description>
-  <url>http://www.sourceforce.net/projects/jpui</url>
+  <url>http://www.sourceforge.net/projects/jpui</url>
   <issueTrackingUrl>http://sourceforge.net/tracker/?group_id=88602</issueTrackingUrl>
+  <siteAddress>shell.sourceforge.net</siteAddress>
+  <siteDirectory>/home/groups/j/jp/jpui/htdocs</siteDirectory>
   <repository>
     <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jpui:jpui</connection>
     <url>http://cvs.sourceforge.net/viewcvs.py/jpui/</url>
