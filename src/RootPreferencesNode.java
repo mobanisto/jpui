@@ -2,8 +2,8 @@
  * RootPreferenceNode
  *
  * $RCSfile: RootPreferencesNode.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/04 18:51:04 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/10 20:10:46 $
  * $Source: /cvsroot/jpui/jpui/src/RootPreferencesNode.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -166,10 +166,10 @@ public class RootPreferencesNode extends Preferences {
 	 */
 	public Preferences node(String pathName) {
 		if(pathName.equals("User")) {
-			return Preferences.userRoot();
+			return new PreferencesNode(Preferences.userRoot());
 		}
 		else if(pathName.equals("System")) {
-			return Preferences.systemRoot();
+			return new PreferencesNode(Preferences.systemRoot());
 		}
 		
 		return null;

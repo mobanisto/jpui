@@ -2,8 +2,8 @@
  * PreferencesTreeModel
  *
  * $RCSfile: PreferencesTreeModel.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/04 18:51:04 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/10 20:10:46 $
  * $Source: /cvsroot/jpui/jpui/src/PreferencesTreeModel.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -68,7 +68,7 @@ public class PreferencesTreeModel implements TreeModel {
             oChild = oPref.node(sChildren[nIndex]);
         }
         catch (BackingStoreException oEx) {
-            // TODO: BackingStoreException
+            oEx.printStackTrace();
         }
 
         return oChild;
@@ -84,7 +84,7 @@ public class PreferencesTreeModel implements TreeModel {
             nCount = oPref.childrenNames().length;
         }
         catch (BackingStoreException oEx) {
-            // TODO: BackingStoreException
+            oEx.printStackTrace();
         }
 
         return nCount;
@@ -132,7 +132,7 @@ public class PreferencesTreeModel implements TreeModel {
             }
         }
         catch (BackingStoreException oEx) {
-            // TODO: BackingStoreException
+            oEx.printStackTrace();
         }
 
         return nIndex;
@@ -164,7 +164,7 @@ public class PreferencesTreeModel implements TreeModel {
         for (int i = 0; i < moListeners.size(); i++) {
             TreeModelEvent oEvent =
                 new TreeModelEvent(this, toTreePath(oNewNode.parent()));
-            ((TreeModelListener) moListeners.elementAt(i)).treeNodesInserted(
+            ((TreeModelListener) moListeners.elementAt(i)).treeStructureChanged(
                 oEvent);
         }
     }
@@ -180,7 +180,7 @@ public class PreferencesTreeModel implements TreeModel {
         for (int i = 0; i < moListeners.size(); i++) {
             TreeModelEvent oEvent =
                 new TreeModelEvent(this, toTreePath(oParent));
-            ((TreeModelListener) moListeners.elementAt(i)).treeNodesRemoved(
+            ((TreeModelListener) moListeners.elementAt(i)).treeStructureChanged(
                 oEvent);
         }
     }

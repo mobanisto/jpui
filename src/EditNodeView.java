@@ -2,8 +2,8 @@
  * EditNodeView
  *
  * $RCSfile: EditNodeView.java,v $
- * $Revision: 1.3 $
- * $Date: 2004/01/04 18:51:04 $
+ * $Revision: 1.4 $
+ * $Date: 2004/01/10 20:10:46 $
  * $Source: /cvsroot/jpui/jpui/src/EditNodeView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -108,9 +108,11 @@ public class EditNodeView implements Observer {
      */
     public void deleteKey() {
         int nRow = moTable.getSelectedRow();
-        String sKey = moTable.getValueAt(nRow, 0).toString();
-        if (sKey != null) {
-            PreferencesModel.Instance().removeAttribute(sKey);
+        if(nRow >= 0) {
+            String sKey = moTable.getValueAt(nRow, 0).toString();
+            if (sKey != null) {
+                PreferencesModel.Instance().removeAttribute(sKey);
+            }
         }
     }
 }

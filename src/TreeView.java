@@ -2,8 +2,8 @@
  * TreeView
  *
  * $RCSfile: TreeView.java,v $
- * $Revision: 1.3 $
- * $Date: 2004/01/04 18:51:04 $
+ * $Revision: 1.4 $
+ * $Date: 2004/01/10 20:10:46 $
  * $Source: /cvsroot/jpui/jpui/src/TreeView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -166,15 +166,15 @@ public class TreeView implements Observer, TreeModelListener {
     private void syncTree() {
         PreferencesModel oModel = PreferencesModel.Instance();
         Preferences oCurrentPref = oModel.getCurrentNode();
-        Preferences oCurrentTreeSelection =
-            (Preferences)moTree.getSelectionPath().getLastPathComponent();
+//        Preferences oCurrentTreeSelection =
+//            (Preferences)moTree.getSelectionPath().getLastPathComponent();
         
         // update the tree selection
-        if(!oCurrentPref.equals(oCurrentTreeSelection)) {
+//        if(!oCurrentPref.equals(oCurrentTreeSelection)) {
             PreferencesTreeModel oPrefTreeModel = 
                 (PreferencesTreeModel)moTree.getModel();
             
-           // moTree.setSelectionPath(oPrefTreeModel.toTreePath(oCurrentPref));
-        }
+            moTree.setSelectionPath(oPrefTreeModel.toTreePath(oCurrentPref));
+//        }
     }
 }

@@ -2,8 +2,8 @@
  * PreferencesModel
  *
  * $RCSfile: PreferencesModel.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/04 18:51:04 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/10 20:10:46 $
  * $Source: /cvsroot/jpui/jpui/src/PreferencesModel.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -53,8 +53,8 @@ public class PreferencesModel
      * Private ctor, clients use Instance()
      */
     private PreferencesModel() {
-    	Preferences oSystem = Preferences.systemRoot();
-    	Preferences oUser = Preferences.userRoot();
+    	Preferences oSystem = PreferencesNode.systemRoot();
+    	Preferences oUser = PreferencesNode.userRoot();
     	
     	// listen for preference chance events
     	oSystem.addNodeChangeListener(this);
@@ -171,7 +171,7 @@ public class PreferencesModel
                 setCurrentNode(oParentNode);
             }
             catch (BackingStoreException oEx) {
-                // TODO: BackingStoreException
+                oEx.printStackTrace();
             }
         }
         return oParentNode;
@@ -181,21 +181,21 @@ public class PreferencesModel
      * @see java.util.prefs.NodeChangeListener#childAdded(java.util.prefs.NodeChangeEvent)
      */
     public void childAdded(NodeChangeEvent evt) {
-		System.out.println("childAdded");
+        // stub
     }
 
     /**
      * @see java.util.prefs.NodeChangeListener#childRemoved(java.util.prefs.NodeChangeEvent)
      */
     public void childRemoved(NodeChangeEvent evt) {
-		System.out.println("childRemoved");
+        // stub
     }
 
     /**
      * @see java.util.prefs.PreferenceChangeListener#preferenceChange(java.util.prefs.PreferenceChangeEvent)
      */
     public void preferenceChange(PreferenceChangeEvent evt) {
-		System.out.println("preferenceChange");
+        // stub
     }
 
     /**
@@ -207,7 +207,7 @@ public class PreferencesModel
             oPref.sync();
         }
         catch (BackingStoreException oEx) {
-            // TODO: BackingStoreException   
+            oEx.printStackTrace();
         }
     }
 }
