@@ -1,14 +1,24 @@
 <?xml version="1.0" ?>
 <project>
   <pomVersion>3</pomVersion>
-  <name>jpui</name>
+  <name>Java Preferences User Interface</name>
   <id>jpui</id>
-  <currentVersion>0.3.0</currentVersion>
+  <currentVersion>0.4.0</currentVersion>
   <inceptionYear>2003</inceptionYear>
   <package/>
   <shortDescription>Java Preferences User Interface</shortDescription>
   <description>
-Java Preferences Browser. Java/Swing based tool to browse and edit java preferences created via the java.util.prefs package.
+Java Preferences Browser. Java/Swing based tool to browse and edit java preferences created via the JDK 1.4.x java.util.prefs package.
+&lt;br/&gt;
+
+&lt;br/&gt;Download latest jar &lt;a href="http://prdownloads.sourceforge.net/jpui/jpui-0.3.0.jar?download"&gt;jpui-0.3.0.jar&lt;/a&gt;
+&lt;br/&gt;
+
+&lt;br/&gt;Run by executing &lt;code&gt;java -jar jpui-0.3.0.jar&lt;/code&gt; with any 1.4.x Java JRE.
+&lt;br/&gt;
+&lt;br/&gt;
+
+&lt;br/&gt;Sourceforge site &lt;a href="http://www.sourceforge.net/projects/jpui"&gt;http://www.sourceforge.net/projects/jpui&lt;/a&gt;
   </description>
   <url>http://www.sourceforge.net/projects/jpui</url>
   <issueTrackingUrl>http://sourceforge.net/tracker/?group_id=88602</issueTrackingUrl>
@@ -17,6 +27,19 @@ Java Preferences Browser. Java/Swing based tool to browse and edit java preferen
   <repository>
     <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jpui:jpui</connection>
     <url>http://cvs.sourceforge.net/viewcvs.py/jpui/</url>
+
+    <versions>
+      <version>
+        <id>r1</id>
+        <name>0.3.0</name>
+        <tag>jpui-0_3_0</tag>
+      </version>
+      <version>
+        <id>r2</id>
+        <name>0.4.0</name>
+        <tag>HEAD</tag>
+      </version>
+    </versions> 
   </repository>
 
   <mailingLists>
@@ -64,7 +87,9 @@ Java Preferences Browser. Java/Swing based tool to browse and edit java preferen
     <resources>
       <resource>
         <directory>src</directory>
-        <includes>*.properties</includes>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
       </resource>
     </resources>
   </build>
