@@ -2,8 +2,8 @@
  * JPUI
  *
  * $RCSfile: JPUI.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/01 17:41:45 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/04 18:51:04 $
  * $Source: /cvsroot/jpui/jpui/src/JPUI.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -37,9 +37,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 /**
- * The one and only main program class
+ * The one and only main program class.
  * 
- * Builds the model, the views, and lays out the GUI
+ * Builds the model, the views, and lays out the GUI.
  */
 public class JPUI {
     // views
@@ -57,7 +57,7 @@ public class JPUI {
 
     /**
      * Construct and put together the model, views,
-     * and UI components
+     * and UI components.
      */
     private void initialize() {
         // the views
@@ -101,21 +101,21 @@ public class JPUI {
     }
 
     /**
-     * @return
+     * @return javax.swing.JPanel
      */
     public static JPanel getContentPanel() {
         return moContentPanel;
     }
 
     /**
-     * @return
+     * @return javax.swing.JFrame
      */
     public static JFrame getFrame() {
         return moFrame;
     }
 
     /**
-     * @param oArgs
+     * @param oArgs arguments to main
      */
     public static void main(String[] oArgs) {
         final JPUI oPrefGUI = new JPUI();

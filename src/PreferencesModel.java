@@ -2,8 +2,8 @@
  * PreferencesModel
  *
  * $RCSfile: PreferencesModel.java,v $
- * $Revision: 1.1 $
- * $Date: 2004/01/01 17:41:45 $
+ * $Revision: 1.2 $
+ * $Date: 2004/01/04 18:51:04 $
  * $Source: /cvsroot/jpui/jpui/src/PreferencesModel.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -43,20 +43,32 @@ import java.util.prefs.Preferences;
  */
 public class PreferencesModel
     extends Observable
-    implements NodeChangeListener {
+    implements NodeChangeListener, PreferenceChangeListener {
+    // singleton instance
     private static PreferencesModel moInstance = new PreferencesModel();
+    // reference to the current preferences node
     Preferences moCurrentNode = null;
 
     /**
      * Private ctor, clients use Instance()
      */
     private PreferencesModel() {
-        moCurrentNode = Preferences.systemRoot();
+    	Preferences oSystem = Preferences.systemRoot();
+    	Preferences oUser = Preferences.userRoot();
+    	
+    	// listen for preference chance events
+    	oSystem.addNodeChangeListener(this);
+    	oSystem.addPreferenceChangeListener(this);
+    	oUser.addNodeChangeListener(this);
+    	oUser.addPreferenceChangeListener(this);
+    	
+    	// the current node defaults to the system root
+        moCurrentNode = oSystem;
     }
 
     /**
      * Singleton accessor
-     * @return
+     * @return PreferencesModel
      */
     public static PreferencesModel Instance() {
         return moInstance;
@@ -64,7 +76,7 @@ public class PreferencesModel
 
     /**
      * Gets the current preferences node
-     * @return
+     * @return java.util.prefs.Preferences
      */
     public Preferences getCurrentNode() {
         return moCurrentNode;
@@ -73,8 +85,8 @@ public class PreferencesModel
     /**
      * Sets the current preferences node and notifies
      * observers if the new node is not the same as the
-     * previous current node
-     * @param oNode
+     * previous current node.
+     * @param oNode new current node
      */
     public void setCurrentNode(Preferences oNode) {
         if (!oNode.equals(moCurrentNode)) {
@@ -86,8 +98,8 @@ public class PreferencesModel
 
     /**
      * Sets the attribute sKey of the current node
-     * @param sKey
-     * @param sValue
+     * @param sKey node key name
+     * @param sValue node key value
      */
     public void setAttribute(String sKey, String sValue) {
         Preferences oCurrentNode = getCurrentNode();
@@ -99,7 +111,7 @@ public class PreferencesModel
 
     /**
      * Removes the attribute sKey of the current node
-     * @param sKey
+     * @param sKey node key to remove
      */
     public void removeAttribute(String sKey) {
         Preferences oCurrentNode = getCurrentNode();
@@ -113,8 +125,8 @@ public class PreferencesModel
 
     /**
      * Renames the attribute sOldKey of the current node
-     * @param sOldKey
-     * @param sNewKey
+     * @param sOldKey node key old name
+     * @param sNewKey node key new name
      */
     public void renameAttribute(String sOldKey, String sNewKey) {
         Preferences oCurrentNode = getCurrentNode();
@@ -134,19 +146,22 @@ public class PreferencesModel
 
     /**
      * Creates a new node as a child of the current node
-     * @param sNodeName
+     * @param sNodeName new node name
+     * @return java.util.prefs.Preferences the new node
      */
-    public void newNode(String sNodeName) {
+    public Preferences newNode(String sNodeName) {
         Preferences oCurrentNode = getCurrentNode();
         Preferences oNewNode = oCurrentNode.node(sNodeName);
         sync(oCurrentNode);
         setCurrentNode(oNewNode);
+        return oNewNode;
     }
 
     /**
      * Deletes the current node and its children
+     * @return java.util.prefs.Preferences the parent of the deleted node
      */
-    public void deleteNode() {
+    public Preferences deleteNode() {
         Preferences oCurrentNode = getCurrentNode();
         Preferences oParentNode = oCurrentNode.parent();
         if (oParentNode != null) {
@@ -159,32 +174,33 @@ public class PreferencesModel
                 // TODO: BackingStoreException
             }
         }
+        return oParentNode;
     }
 
     /**
      * @see java.util.prefs.NodeChangeListener#childAdded(java.util.prefs.NodeChangeEvent)
      */
     public void childAdded(NodeChangeEvent evt) {
-
+		System.out.println("childAdded");
     }
 
     /**
      * @see java.util.prefs.NodeChangeListener#childRemoved(java.util.prefs.NodeChangeEvent)
      */
     public void childRemoved(NodeChangeEvent evt) {
-
+		System.out.println("childRemoved");
     }
 
     /**
      * @see java.util.prefs.PreferenceChangeListener#preferenceChange(java.util.prefs.PreferenceChangeEvent)
      */
     public void preferenceChange(PreferenceChangeEvent evt) {
-
+		System.out.println("preferenceChange");
     }
 
     /**
      * Utility method to persist the preferences store after a change
-     * @param oPref
+     * @param oPref preferences node to sync from
      */
     private void sync(Preferences oPref) {
         try {

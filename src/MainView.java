@@ -2,8 +2,8 @@
  * MainView
  *
  * $RCSfile: MainView.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/01 17:41:45 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/04 18:51:04 $
  * $Source: /cvsroot/jpui/jpui/src/MainView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -36,8 +36,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- * View that is responsible for menu commands
- * Delegates menu command implementation to the relevant view
+ * View that is responsible for menu commands.
+ * Delegates menu command implementation to the relevant view.
  */
 public class MainView implements Observer, ActionListener {
     // menu bar
@@ -56,7 +56,9 @@ public class MainView implements Observer, ActionListener {
     private EditNodeView moEditNodeView;
 
     /**
-     * @param oModel
+     * ctor
+     * @param oTreeView left side tree view
+     * @param oEditNodeView right side edit node view
      */
     public MainView(TreeView oTreeView, EditNodeView oEditNodeView) {
         moTreeView = oTreeView;
@@ -104,7 +106,7 @@ public class MainView implements Observer, ActionListener {
     }
 
     /**
-     * @return
+     * @return javax.swing.JMenuBar
      */
     public JMenuBar getMenuBar() {
         return moMenuBar;

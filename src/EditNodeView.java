@@ -2,8 +2,8 @@
  * EditNodeView
  *
  * $RCSfile: EditNodeView.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/01 17:41:45 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/04 18:51:04 $
  * $Source: /cvsroot/jpui/jpui/src/EditNodeView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -45,7 +45,7 @@ public class EditNodeView implements Observer {
     private JTable moTable;
 
     /**
-     * @param oModel
+     * ctor
      */
     public EditNodeView() {
         moPanel = new JPanel();
@@ -57,7 +57,7 @@ public class EditNodeView implements Observer {
     }
 
     /**
-     * @return
+     * @return javax.swing.JPanel
      */
     public JPanel getPanel() {
         return moPanel;
@@ -88,8 +88,8 @@ public class EditNodeView implements Observer {
     }
 
     /**
-     * prompts for and creates a new attribute key for the
-     * currently selected node
+     * Prompts for and creates a new attribute key for the
+     * currently selected node.
      */
     public void newKey() {
         String sNewKey =
@@ -104,7 +104,7 @@ public class EditNodeView implements Observer {
     }
 
     /**
-     * Deletes the currently selected attribute
+     * Deletes the currently selected attribute.
      */
     public void deleteKey() {
         int nRow = moTable.getSelectedRow();

@@ -2,8 +2,8 @@
  * TreeView
  *
  * $RCSfile: TreeView.java,v $
- * $Revision: 1.2 $
- * $Date: 2004/01/01 17:41:45 $
+ * $Revision: 1.3 $
+ * $Date: 2004/01/04 18:51:04 $
  * $Source: /cvsroot/jpui/jpui/src/TreeView.java,v $
  *
  * JPUI - Java Preferences User Interface
@@ -27,25 +27,31 @@
  */
 
 import java.awt.BorderLayout;
+
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
+import java.util.prefs.Preferences;
+import javax.swing.event.TreeModelListener;
 
 /**
  * Left side tree view of user and system
  * preference trees
  */
-public class TreeView implements Observer {
+public class TreeView implements Observer, TreeModelListener {
     // panel
     private JPanel moPanel;
     // tree control
     private JTree moTree;
+    // tree model
+    private PreferencesTreeModel moPreferencesTreeModel;
 
     /**
      * @param oModel
@@ -53,27 +59,30 @@ public class TreeView implements Observer {
     public TreeView() {
         moPanel = new JPanel();
         moPanel.setLayout(new BorderLayout());
-
-        moTree = new JTree(new PreferencesTreeModel());
+        moPreferencesTreeModel = new PreferencesTreeModel();
+        moTree = new JTree(moPreferencesTreeModel);
+        moPreferencesTreeModel.addTreeModelListener(this);
+        
         moTree.setRootVisible(false);
         moTree.getSelectionModel().setSelectionMode(
             TreeSelectionModel.SINGLE_TREE_SELECTION);
         moTree.setEditable(true);
+        moTree.setShowsRootHandles(true);
 
         //		Listen for when the selection changes.
         moTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
-                TreeModelNodeInterface oNode =
-                    (TreeModelNodeInterface) moTree
+                Preferences oNode =
+                    (Preferences) moTree
                         .getLastSelectedPathComponent();
 
                 if (oNode == null)
                     return;
 
                 // update the current node
-                if (oNode instanceof PreferencesNode) {
+                if (oNode instanceof Preferences) {
                     PreferencesModel.Instance().setCurrentNode(
-                        ((PreferencesNode) oNode).getPreferences());
+                        ((Preferences) oNode));
                 }
             }
         });
@@ -93,7 +102,7 @@ public class TreeView implements Observer {
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update(Observable oObject, Object oArg) {
-        // TODO: update the tree view as nodes are added/deleted
+        syncTree();
     }
 
     /**
@@ -107,7 +116,9 @@ public class TreeView implements Observer {
                 Resources.getString("new_node_title"),
                 JOptionPane.QUESTION_MESSAGE);
         if (sNewNode != null) {
-            PreferencesModel.Instance().newNode(sNewNode);
+            PreferencesTreeModel oPrefTreeModel = 
+                (PreferencesTreeModel)moTree.getModel();
+            oPrefTreeModel.newNode(sNewNode);
         }
     }
     
@@ -115,6 +126,55 @@ public class TreeView implements Observer {
      * Delete the current node
      */
     public void deleteNode() {
-        PreferencesModel.Instance().deleteNode();
+        PreferencesTreeModel oPrefTreeModel = 
+            (PreferencesTreeModel)moTree.getModel();
+        oPrefTreeModel.deleteNode();
+    }
+
+    /**
+     * @see javax.swing.event.TreeModelListener#treeNodesChanged(javax.swing.event.TreeModelEvent)
+     */
+    public void treeNodesChanged(TreeModelEvent e) {
+        syncTree();
+    }
+
+    /**
+     * @see javax.swing.event.TreeModelListener#treeNodesInserted(javax.swing.event.TreeModelEvent)
+     */
+    public void treeNodesInserted(TreeModelEvent e) {
+        syncTree();
+    }
+
+    /**
+     * @see javax.swing.event.TreeModelListener#treeNodesRemoved(javax.swing.event.TreeModelEvent)
+     */
+    public void treeNodesRemoved(TreeModelEvent e) {
+        syncTree();
+    }
+
+    /**
+     * @see javax.swing.event.TreeModelListener#treeStructureChanged(javax.swing.event.TreeModelEvent)
+     */
+    public void treeStructureChanged(TreeModelEvent e) {
+        syncTree();
+    }
+
+    /**
+     * Ensure that the JTree reflects the current node after the tree
+     * changes by having a node added or removed.
+     */
+    private void syncTree() {
+        PreferencesModel oModel = PreferencesModel.Instance();
+        Preferences oCurrentPref = oModel.getCurrentNode();
+        Preferences oCurrentTreeSelection =
+            (Preferences)moTree.getSelectionPath().getLastPathComponent();
+        
+        // update the tree selection
+        if(!oCurrentPref.equals(oCurrentTreeSelection)) {
+            PreferencesTreeModel oPrefTreeModel = 
+                (PreferencesTreeModel)moTree.getModel();
+            
+           // moTree.setSelectionPath(oPrefTreeModel.toTreePath(oCurrentPref));
+        }
     }
 }
