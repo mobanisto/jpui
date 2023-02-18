@@ -22,19 +22,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.prefs.Preferences;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 
 /**
  * Right hand side of UI. Responsible for rendering
@@ -93,11 +92,11 @@ public class EditNodeView implements Observer {
      */
     public void newKey() {
         String sNewKey =
-            JOptionPane.showInputDialog(
-                moPanel.getParent(),
-                Resources.getString("new_attr_message"),
-                Resources.getString("new_attr_title"),
-                JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showInputDialog(
+                        moPanel.getParent(),
+                        Resources.getString("new_attr_message"),
+                        Resources.getString("new_attr_title"),
+                        JOptionPane.QUESTION_MESSAGE);
         if (sNewKey != null) {
             PreferencesModel.Instance().setAttribute(sNewKey, "");
         }
@@ -108,7 +107,7 @@ public class EditNodeView implements Observer {
      */
     public void deleteKey() {
         int nRow = moTable.getSelectedRow();
-        if(nRow >= 0) {
+        if (nRow >= 0) {
             String sKey = moTable.getValueAt(nRow, 0).toString();
             if (sKey != null) {
                 PreferencesModel.Instance().removeAttribute(sKey);

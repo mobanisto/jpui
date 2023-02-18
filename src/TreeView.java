@@ -22,24 +22,22 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
-
-import java.awt.BorderLayout;
-
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
+import java.awt.BorderLayout;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.prefs.Preferences;
-import javax.swing.event.TreeModelListener;
 
 /**
  * Left side tree view of user and system
@@ -62,10 +60,10 @@ public class TreeView implements Observer, TreeModelListener {
         moPreferencesTreeModel = new PreferencesTreeModel();
         moTree = new JTree(moPreferencesTreeModel);
         moPreferencesTreeModel.addTreeModelListener(this);
-        
+
         moTree.setRootVisible(false);
         moTree.getSelectionModel().setSelectionMode(
-            TreeSelectionModel.SINGLE_TREE_SELECTION);
+                TreeSelectionModel.SINGLE_TREE_SELECTION);
         moTree.setEditable(true);
         moTree.setShowsRootHandles(true);
 
@@ -73,8 +71,8 @@ public class TreeView implements Observer, TreeModelListener {
         moTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 Preferences oNode =
-                    (Preferences) moTree
-                        .getLastSelectedPathComponent();
+                        (Preferences) moTree
+                                .getLastSelectedPathComponent();
 
                 if (oNode == null)
                     return;
@@ -82,7 +80,7 @@ public class TreeView implements Observer, TreeModelListener {
                 // update the current node
                 if (oNode instanceof Preferences) {
                     PreferencesModel.Instance().setCurrentNode(
-                        ((Preferences) oNode));
+                            ((Preferences) oNode));
                 }
             }
         });
@@ -110,24 +108,24 @@ public class TreeView implements Observer, TreeModelListener {
      */
     public void newNode() {
         String sNewNode =
-            JOptionPane.showInputDialog(
-                moPanel.getParent(),
-                Resources.getString("new_node_message"),
-                Resources.getString("new_node_title"),
-                JOptionPane.QUESTION_MESSAGE);
+                JOptionPane.showInputDialog(
+                        moPanel.getParent(),
+                        Resources.getString("new_node_message"),
+                        Resources.getString("new_node_title"),
+                        JOptionPane.QUESTION_MESSAGE);
         if (sNewNode != null) {
-            PreferencesTreeModel oPrefTreeModel = 
-                (PreferencesTreeModel)moTree.getModel();
+            PreferencesTreeModel oPrefTreeModel =
+                    (PreferencesTreeModel) moTree.getModel();
             oPrefTreeModel.newNode(sNewNode);
         }
     }
-    
+
     /**
      * Delete the current node
      */
     public void deleteNode() {
-        PreferencesTreeModel oPrefTreeModel = 
-            (PreferencesTreeModel)moTree.getModel();
+        PreferencesTreeModel oPrefTreeModel =
+                (PreferencesTreeModel) moTree.getModel();
         oPrefTreeModel.deleteNode();
     }
 
@@ -168,13 +166,13 @@ public class TreeView implements Observer, TreeModelListener {
         Preferences oCurrentPref = oModel.getCurrentNode();
 //        Preferences oCurrentTreeSelection =
 //            (Preferences)moTree.getSelectionPath().getLastPathComponent();
-        
+
         // update the tree selection
 //        if(!oCurrentPref.equals(oCurrentTreeSelection)) {
-            PreferencesTreeModel oPrefTreeModel = 
-                (PreferencesTreeModel)moTree.getModel();
-            
-            moTree.setSelectionPath(oPrefTreeModel.toTreePath(oCurrentPref));
+        PreferencesTreeModel oPrefTreeModel =
+                (PreferencesTreeModel) moTree.getModel();
+
+        moTree.setSelectionPath(oPrefTreeModel.toTreePath(oCurrentPref));
 //        }
     }
 }

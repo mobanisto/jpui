@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
 
@@ -48,18 +48,20 @@ public class PreferencesNode extends Preferences {
      */
     private PreferencesNode() {
     }
-    
+
     /**
      * Public ctor
+     *
      * @param oPref node to delegate to
      */
     public PreferencesNode(Preferences oPref) {
-        moPref = oPref;   
+        moPref = oPref;
     }
 
     /**
      * Access for the deligate java.util.prefs.Preferences object
      * Used by java.lang.Object.equals
+     *
      * @return java.util.prefs.Preferences
      */
     protected Preferences getPreferences() {
@@ -67,14 +69,13 @@ public class PreferencesNode extends Preferences {
     }
 
     /**
-     * @see java.util.prefs.Preferences.parent
      * @return java.util.prefs.Preferences
+     * @see java.util.prefs.Preferences.parent
      */
     public Preferences parent() {
-        if(moPref.parent() == null) {
+        if (moPref.parent() == null) {
             return null;
-        }
-        else {
+        } else {
             return new PreferencesNode(moPref.parent());
         }
     }
@@ -82,37 +83,35 @@ public class PreferencesNode extends Preferences {
     /**
      * Returns a friendly string name for a node, suitable
      * for display in the JTree
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        if(moPref.parent() == null) {
-            if(moPref.isUserNode() == true) {
+        if (moPref.parent() == null) {
+            if (moPref.isUserNode() == true) {
                 return "User";
-            }
-            else {
+            } else {
                 return "System";
             }
-        }
-        else {
+        } else {
             return moPref.name();
         }
     }
 
     /**
      * Custom equals impl to compare the wrapped preferences objects
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
-        return moPref.equals(((PreferencesNode)obj).getPreferences());
+        return moPref.equals(((PreferencesNode) obj).getPreferences());
     }
 
     /* (non-Javadoc)
      * @see java.util.prefs.Preferences#importPreferences(java.io.InputStream)
      */
     public static void importPreferences(InputStream is)
-        throws IOException, InvalidPreferencesFormatException {
+            throws IOException, InvalidPreferencesFormatException {
         Preferences.importPreferences(is);
     }
 
@@ -186,7 +185,7 @@ public class PreferencesNode extends Preferences {
      * @throws java.util.prefs.BackingStoreException
      */
     public void exportNode(OutputStream os)
-        throws IOException, BackingStoreException {
+            throws IOException, BackingStoreException {
         moPref.exportNode(os);
     }
 
@@ -196,7 +195,7 @@ public class PreferencesNode extends Preferences {
      * @throws java.util.prefs.BackingStoreException
      */
     public void exportSubtree(OutputStream os)
-        throws IOException, BackingStoreException {
+            throws IOException, BackingStoreException {
         moPref.exportSubtree(os);
     }
 

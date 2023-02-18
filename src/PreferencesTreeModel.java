@@ -22,20 +22,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
-
-import java.util.Collections;
-import java.util.Stack;
-import java.util.Vector;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import java.util.Collections;
+import java.util.Stack;
+import java.util.Vector;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * Class that exposes java preferences as a TreeModel.
@@ -66,8 +65,7 @@ public class PreferencesTreeModel implements TreeModel {
         try {
             String[] sChildren = oPref.childrenNames();
             oChild = oPref.node(sChildren[nIndex]);
-        }
-        catch (BackingStoreException oEx) {
+        } catch (BackingStoreException oEx) {
             oEx.printStackTrace();
         }
 
@@ -82,8 +80,7 @@ public class PreferencesTreeModel implements TreeModel {
         int nCount = 0;
         try {
             nCount = oPref.childrenNames().length;
-        }
-        catch (BackingStoreException oEx) {
+        } catch (BackingStoreException oEx) {
             oEx.printStackTrace();
         }
 
@@ -105,10 +102,10 @@ public class PreferencesTreeModel implements TreeModel {
 
         for (int i = 0; i < moListeners.size(); i++) {
             TreeModelEvent oEvent =
-                new TreeModelEvent(this, new Object[] { moRoot });
+                    new TreeModelEvent(this, new Object[]{moRoot});
 
             ((TreeModelListener) moListeners.elementAt(i)).treeNodesChanged(
-                oEvent);
+                    oEvent);
         }
     }
 
@@ -130,8 +127,7 @@ public class PreferencesTreeModel implements TreeModel {
                     break;
                 }
             }
-        }
-        catch (BackingStoreException oEx) {
+        } catch (BackingStoreException oEx) {
             oEx.printStackTrace();
         }
 
@@ -151,57 +147,57 @@ public class PreferencesTreeModel implements TreeModel {
     public void removeTreeModelListener(TreeModelListener oListener) {
         moListeners.remove(oListener);
     }
-    
+
     /**
      * @param sNewNode
      */
     public void newNode(String sNewNode) {
         // create the node
-        Preferences oNewNode = 
-            PreferencesModel.Instance().newNode(sNewNode);
+        Preferences oNewNode =
+                PreferencesModel.Instance().newNode(sNewNode);
 
         // send notifications
         for (int i = 0; i < moListeners.size(); i++) {
             TreeModelEvent oEvent =
-                new TreeModelEvent(this, toTreePath(oNewNode.parent()));
+                    new TreeModelEvent(this, toTreePath(oNewNode.parent()));
             ((TreeModelListener) moListeners.elementAt(i)).treeStructureChanged(
-                oEvent);
+                    oEvent);
         }
     }
 
     /**
-     * 
+     *
      */
     public void deleteNode() {
         // delete the node
         Preferences oParent = PreferencesModel.Instance().deleteNode();
-        
+
         // send notifications
         for (int i = 0; i < moListeners.size(); i++) {
             TreeModelEvent oEvent =
-                new TreeModelEvent(this, toTreePath(oParent));
+                    new TreeModelEvent(this, toTreePath(oParent));
             ((TreeModelListener) moListeners.elementAt(i)).treeStructureChanged(
-                oEvent);
+                    oEvent);
         }
     }
-    
+
     /**
      * @param oPref
      * @return javax.swing.tree.TreePath
      */
     public TreePath toTreePath(Preferences oPref) {
         Stack oStack = new Stack();
-        
-        while(oPref != null) {
+
+        while (oPref != null) {
             oStack.push(oPref);
             oPref = oPref.parent();
         }
         //  oStack now contains all the nodes up the the root, except the root
         oStack.push(moRoot);
-        
+
         // reverse the order of the stack elements
         Collections.reverse(oStack);
-        
+
         return new TreePath(oStack.toArray(new Preferences[0]));
     }
 }

@@ -22,18 +22,17 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * View that is responsible for menu commands.
@@ -57,7 +56,8 @@ public class MainView implements Observer, ActionListener {
 
     /**
      * ctor
-     * @param oTreeView left side tree view
+     *
+     * @param oTreeView     left side tree view
      * @param oEditNodeView right side edit node view
      */
     public MainView(TreeView oTreeView, EditNodeView oEditNodeView) {
@@ -114,23 +114,19 @@ public class MainView implements Observer, ActionListener {
 
     /**
      * Process menu selection
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(EXIT)) {
             System.exit(0);
-        }
-        else if (e.getActionCommand().equals(NODE_NEW)) {
+        } else if (e.getActionCommand().equals(NODE_NEW)) {
             moTreeView.newNode();
-        }
-        else if (e.getActionCommand().equals(NODE_DELETE)) {
+        } else if (e.getActionCommand().equals(NODE_DELETE)) {
             moTreeView.deleteNode();
-        }
-        else if (e.getActionCommand().equals(KEY_NEW)) {
+        } else if (e.getActionCommand().equals(KEY_NEW)) {
             moEditNodeView.newKey();
-        }
-        else if (e.getActionCommand().equals(KEY_DELETE)) {
+        } else if (e.getActionCommand().equals(KEY_DELETE)) {
             moEditNodeView.deleteKey();
         }
     }

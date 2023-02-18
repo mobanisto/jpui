@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
 
@@ -32,11 +32,9 @@ import junit.framework.TestSuite;
 /**
  * AllTests for JPUI
  */
-public class AllTests
-{
+public class AllTests {
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite("Test for default package");
 
         suite.addTest(new TestSuite(PreferencesModelTest.class));

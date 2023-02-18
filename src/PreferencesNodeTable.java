@@ -22,13 +22,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
- 
-import java.util.prefs.Preferences;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.prefs.Preferences;
 
 /**
  * Table of a preference nodes keys and values
@@ -39,19 +38,20 @@ public class PreferencesNodeTable extends AbstractTableModel {
 
     // column headings for table
     private static String[] msColumns =
-        {
-            Resources.getString("edit_node_key"),
-            Resources.getString("edit_node_value")};
+            {
+                    Resources.getString("edit_node_key"),
+                    Resources.getString("edit_node_value")};
 
     /**
      * default ctor that can not be called
      */
     private PreferencesNodeTable() {
     }
-    
+
     /**
      * ctor for creating a PreferencesNodeTable given
      * a preferences node
+     *
      * @param oPref
      */
     public PreferencesNodeTable(Preferences oPref) {
@@ -65,8 +65,7 @@ public class PreferencesNodeTable extends AbstractTableModel {
         int nRows = 0;
         try {
             nRows = moPref.keys().length;
-        }
-        catch (Exception oEx) {
+        } catch (Exception oEx) {
             oEx.printStackTrace();
         }
         return nRows;
@@ -94,8 +93,7 @@ public class PreferencesNodeTable extends AbstractTableModel {
             else {
                 sReturn = moPref.get(sKeys[nRow], null);
             }
-        }
-        catch (Exception oEx) {
+        } catch (Exception oEx) {
             oEx.printStackTrace();
         }
         return sReturn;
@@ -125,8 +123,7 @@ public class PreferencesNodeTable extends AbstractTableModel {
             String sValue = (String) getValueAt(nRowIndex, 1);
             String sNewKey = (String) oValue;
             PreferencesModel.Instance().renameAttribute(sKey, sNewKey);
-        }
-        else if (nColumnIndex == 1) {
+        } else if (nColumnIndex == 1) {
             // set the value
             PreferencesModel.Instance().setAttribute(sKey, oValue.toString());
         }

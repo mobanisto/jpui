@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
 
@@ -42,8 +42,8 @@ import java.util.prefs.Preferences;
  * java preferences node heirarchy.
  */
 public class PreferencesModel
-    extends Observable
-    implements NodeChangeListener, PreferenceChangeListener {
+        extends Observable
+        implements NodeChangeListener, PreferenceChangeListener {
     // singleton instance
     private static PreferencesModel moInstance = new PreferencesModel();
     // reference to the current preferences node
@@ -53,21 +53,22 @@ public class PreferencesModel
      * Private ctor, clients use Instance()
      */
     private PreferencesModel() {
-    	Preferences oSystem = PreferencesNode.systemRoot();
-    	Preferences oUser = PreferencesNode.userRoot();
-    	
-    	// listen for preference chance events
-    	oSystem.addNodeChangeListener(this);
-    	oSystem.addPreferenceChangeListener(this);
-    	oUser.addNodeChangeListener(this);
-    	oUser.addPreferenceChangeListener(this);
-    	
-    	// the current node defaults to the system root
+        Preferences oSystem = PreferencesNode.systemRoot();
+        Preferences oUser = PreferencesNode.userRoot();
+
+        // listen for preference chance events
+        oSystem.addNodeChangeListener(this);
+        oSystem.addPreferenceChangeListener(this);
+        oUser.addNodeChangeListener(this);
+        oUser.addPreferenceChangeListener(this);
+
+        // the current node defaults to the system root
         moCurrentNode = oSystem;
     }
 
     /**
      * Singleton accessor
+     *
      * @return PreferencesModel
      */
     public static PreferencesModel Instance() {
@@ -76,6 +77,7 @@ public class PreferencesModel
 
     /**
      * Gets the current preferences node
+     *
      * @return java.util.prefs.Preferences
      */
     public Preferences getCurrentNode() {
@@ -86,6 +88,7 @@ public class PreferencesModel
      * Sets the current preferences node and notifies
      * observers if the new node is not the same as the
      * previous current node.
+     *
      * @param oNode new current node
      */
     public void setCurrentNode(Preferences oNode) {
@@ -98,7 +101,8 @@ public class PreferencesModel
 
     /**
      * Sets the attribute sKey of the current node
-     * @param sKey node key name
+     *
+     * @param sKey   node key name
      * @param sValue node key value
      */
     public void setAttribute(String sKey, String sValue) {
@@ -111,6 +115,7 @@ public class PreferencesModel
 
     /**
      * Removes the attribute sKey of the current node
+     *
      * @param sKey node key to remove
      */
     public void removeAttribute(String sKey) {
@@ -125,6 +130,7 @@ public class PreferencesModel
 
     /**
      * Renames the attribute sOldKey of the current node
+     *
      * @param sOldKey node key old name
      * @param sNewKey node key new name
      */
@@ -137,8 +143,7 @@ public class PreferencesModel
             sync(oCurrentNode);
             setChanged();
             notifyObservers();
-        }
-        else {
+        } else {
             // TODO: a key by this name already exists
         }
 
@@ -146,6 +151,7 @@ public class PreferencesModel
 
     /**
      * Creates a new node as a child of the current node
+     *
      * @param sNodeName new node name
      * @return java.util.prefs.Preferences the new node
      */
@@ -159,6 +165,7 @@ public class PreferencesModel
 
     /**
      * Deletes the current node and its children
+     *
      * @return java.util.prefs.Preferences the parent of the deleted node
      */
     public Preferences deleteNode() {
@@ -169,8 +176,7 @@ public class PreferencesModel
                 oCurrentNode.removeNode();
                 sync(oParentNode);
                 setCurrentNode(oParentNode);
-            }
-            catch (BackingStoreException oEx) {
+            } catch (BackingStoreException oEx) {
                 oEx.printStackTrace();
             }
         }
@@ -200,13 +206,13 @@ public class PreferencesModel
 
     /**
      * Utility method to persist the preferences store after a change
+     *
      * @param oPref preferences node to sync from
      */
     private void sync(Preferences oPref) {
         try {
             oPref.sync();
-        }
-        catch (BackingStoreException oEx) {
+        } catch (BackingStoreException oEx) {
             oEx.printStackTrace();
         }
     }

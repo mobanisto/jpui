@@ -22,23 +22,22 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * The one and only main program class.
- * 
+ * <p>
  * Builds the model, the views, and lays out the GUI.
  */
 public class JPUI {
@@ -92,10 +91,10 @@ public class JPUI {
         JScrollPane oTreePane = new JScrollPane(moTreeView.getPanel());
         JScrollPane oEditNodePane = new JScrollPane(moEditNodeView.getPanel());
         JSplitPane oSplitPane =
-            new JSplitPane(
-                JSplitPane.HORIZONTAL_SPLIT,
-                oTreePane,
-                oEditNodePane);
+                new JSplitPane(
+                        JSplitPane.HORIZONTAL_SPLIT,
+                        oTreePane,
+                        oEditNodePane);
         oSplitPane.setDividerLocation(200);
         moContentPanel.add(oSplitPane, BorderLayout.CENTER);
     }

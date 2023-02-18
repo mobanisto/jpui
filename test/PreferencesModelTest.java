@@ -22,23 +22,24 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Author: macksold@users.sourceforge.net
  */
 
+import junit.framework.TestCase;
+
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
-import junit.framework.TestCase;
 
 /**
  * Test class for PreferencesModel
  */
 public class PreferencesModelTest extends TestCase {
     private static final String TESTNODE = "PreferencesModelTestNode";
-    
+
     /**
      * Constructor for PreferencesModelTest
+     *
      * @param oArg
      */
     public PreferencesModelTest(String oArg) {
@@ -65,42 +66,39 @@ public class PreferencesModelTest extends TestCase {
 
         // current node should be user root
         assertEquals(
-            oUser,
-            PreferencesModel.Instance().getCurrentNode());
+                oUser,
+                PreferencesModel.Instance().getCurrentNode());
     }
 
     public void testSetCurrentNode() {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
-        
+
         // current node should be user root
         assertEquals(
-            oUser,
-            PreferencesModel.Instance().getCurrentNode());
+                oUser,
+                PreferencesModel.Instance().getCurrentNode());
     }
 
     public void testSetAttribute() {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
         PreferencesModel.Instance().newNode(TESTNODE);
-        
+
         Preferences oFooNode = PreferencesModel.Instance().getCurrentNode();
         // set the attribute
         PreferencesModel.Instance().setAttribute("foo", "bar");
         // foo should have a value of bar
         assertEquals(
-            oFooNode.get("foo", null),
-            "bar");
+                oFooNode.get("foo", null),
+                "bar");
 
         // cleanup            
-        try
-        {
+        try {
             oFooNode.remove("foo");
             oFooNode.removeNode();
             oUser.sync();
-        }
-        catch(BackingStoreException oEx)
-        {
+        } catch (BackingStoreException oEx) {
             fail(oEx.getMessage());
         }
     }
@@ -109,28 +107,25 @@ public class PreferencesModelTest extends TestCase {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
         PreferencesModel.Instance().newNode(TESTNODE);
-        
+
         Preferences oFooNode = PreferencesModel.Instance().getCurrentNode();
-        
+
         // set the attribute
         PreferencesModel.Instance().setAttribute("foo", "bar");
         assertEquals(
-            oFooNode.get("foo", null),
-            "bar");
+                oFooNode.get("foo", null),
+                "bar");
         // remove the attribute
         PreferencesModel.Instance().removeAttribute("foo");
         // foo should be gone
         assertNull(
-            oFooNode.get("foo", null));
+                oFooNode.get("foo", null));
 
         // cleanup
-        try
-        {
+        try {
             oFooNode.removeNode();
             oUser.sync();
-        }
-        catch(BackingStoreException oEx)
-        {
+        } catch (BackingStoreException oEx) {
             fail(oEx.getMessage());
         }
     }
@@ -139,35 +134,32 @@ public class PreferencesModelTest extends TestCase {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
         PreferencesModel.Instance().newNode(TESTNODE);
-        
+
         Preferences oFooNode = PreferencesModel.Instance().getCurrentNode();
-        
+
         // set the attribute
         PreferencesModel.Instance().setAttribute("foo", "bar");
         assertEquals(
-            oFooNode.get("foo", null),
-            "bar");
-        
+                oFooNode.get("foo", null),
+                "bar");
+
         // rename the attribute
         PreferencesModel.Instance().renameAttribute("foo", "baz");
-        
+
         // foo should be gone
         assertNull(
-            oFooNode.get("foo", null));
-        
+                oFooNode.get("foo", null));
+
         // baz should now have the value foo used to have
         assertEquals(
-            oFooNode.get("baz", null),
-            "bar");
-        
+                oFooNode.get("baz", null),
+                "bar");
+
         // cleanup
-        try
-        {
+        try {
             oFooNode.removeNode();
             oUser.sync();
-        }
-        catch(BackingStoreException oEx)
-        {
+        } catch (BackingStoreException oEx) {
             fail(oEx.getMessage());
         }
     }
@@ -176,23 +168,20 @@ public class PreferencesModelTest extends TestCase {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
         PreferencesModel.Instance().newNode(TESTNODE);
-        
+
         Preferences oFooNode = PreferencesModel.Instance().getCurrentNode();
-        
+
         // new node should have the name TESTNODE
         assertEquals(
-            oFooNode.name(),
-            TESTNODE);
+                oFooNode.name(),
+                TESTNODE);
 
         // cleanup            
-        try
-        {
+        try {
             oFooNode.remove("foo");
             oFooNode.removeNode();
             oUser.sync();
-        }
-        catch(BackingStoreException oEx)
-        {
+        } catch (BackingStoreException oEx) {
             fail(oEx.getMessage());
         }
     }
@@ -201,31 +190,25 @@ public class PreferencesModelTest extends TestCase {
         Preferences oUser = Preferences.userRoot();
         PreferencesModel.Instance().setCurrentNode(oUser);
         PreferencesModel.Instance().newNode(TESTNODE);
-        
+
         Preferences oFooNode = PreferencesModel.Instance().getCurrentNode();
-        
+
         // new node should have the name TESTNODE
         assertEquals(
-            oFooNode.name(),
-            TESTNODE);
-            
+                oFooNode.name(),
+                TESTNODE);
+
         PreferencesModel.Instance().deleteNode();
-        try
-        {
+        try {
             oFooNode.put("foo", "bar");
             fail("Should throw IllegalStateException: node removed");
-        }
-        catch(IllegalStateException oEx)
-        {
+        } catch (IllegalStateException oEx) {
         }
 
         // cleanup            
-        try
-        {
+        try {
             oUser.sync();
-        }
-        catch(BackingStoreException oEx)
-        {
+        } catch (BackingStoreException oEx) {
             fail(oEx.getMessage());
         }
     }
