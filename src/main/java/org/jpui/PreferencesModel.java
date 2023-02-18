@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import java.util.Observable;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.NodeChangeEvent;

@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.prefs.Preferences;
 

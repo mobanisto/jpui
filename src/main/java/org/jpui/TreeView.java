@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;

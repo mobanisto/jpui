@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 

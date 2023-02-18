@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

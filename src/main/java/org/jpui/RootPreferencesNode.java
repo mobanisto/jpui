@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.prefs.BackingStoreException;

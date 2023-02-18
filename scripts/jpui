@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+CMD="$DIR/jpui.sh"
+CLASS="org.jpui.JPUI"
+
+exec "$CMD" "$CLASS" "$@"

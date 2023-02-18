@@ -26,6 +26,8 @@
  * Author: macksold@users.sourceforge.net
  */
 
+package org.jpui;
+
 import junit.framework.TestCase;
 
 import java.util.prefs.BackingStoreException;
