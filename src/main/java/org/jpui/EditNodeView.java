@@ -28,13 +28,14 @@
 
 package org.jpui;
 
+import org.jpui.observable.Observable;
+import org.jpui.observable.Observer;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.prefs.Preferences;
 
 /**
@@ -81,10 +82,8 @@ public class EditNodeView implements Observer {
         moPanel.validate();
     }
 
-    /**
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update(Observable oObject, Object oArg) {
+    @Override
+    public void update(Observable oObject) {
         renderTable();
     }
 

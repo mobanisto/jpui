@@ -28,13 +28,14 @@
 
 package org.jpui;
 
+import org.jpui.observable.Observable;
+import org.jpui.observable.Observer;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * View that is responsible for menu commands.
@@ -133,10 +134,8 @@ public class MainView implements Observer, ActionListener {
         }
     }
 
-    /**
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update(Observable o, Object arg) {
+    @Override
+    public void update(Observable o) {
 
     }
 

@@ -28,7 +28,8 @@
 
 package org.jpui;
 
-import java.util.Observable;
+import org.jpui.observable.Observable;
+
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.NodeChangeEvent;
 import java.util.prefs.NodeChangeListener;

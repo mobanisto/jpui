@@ -28,6 +28,9 @@
 
 package org.jpui;
 
+import org.jpui.observable.Observable;
+import org.jpui.observable.Observer;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTree;
@@ -37,8 +40,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.BorderLayout;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.prefs.Preferences;
 
 /**
@@ -53,9 +54,6 @@ public class TreeView implements Observer, TreeModelListener {
     // tree model
     private PreferencesTreeModel moPreferencesTreeModel;
 
-    /**
-     * @param oModel
-     */
     public TreeView() {
         moPanel = new JPanel();
         moPanel.setLayout(new BorderLayout());
@@ -98,10 +96,8 @@ public class TreeView implements Observer, TreeModelListener {
         return moPanel;
     }
 
-    /**
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update(Observable oObject, Object oArg) {
+    @Override
+    public void update(Observable oObject) {
         syncTree();
     }
 
