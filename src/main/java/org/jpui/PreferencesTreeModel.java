@@ -47,9 +47,9 @@ import java.util.prefs.Preferences;
  */
 public class PreferencesTreeModel implements TreeModel {
     // vector of listeners to send tree change events to
-    private Vector moListeners = new Vector();
+    private final Vector<TreeModelListener> moListeners = new Vector<>();
     // root of the preference tree
-    private RootPreferencesNode moRoot = new RootPreferencesNode();
+    private final RootPreferencesNode moRoot = new RootPreferencesNode();
 
     /**
      * @see javax.swing.tree.TreeModel#getRoot()
@@ -188,13 +188,13 @@ public class PreferencesTreeModel implements TreeModel {
      * @return javax.swing.tree.TreePath
      */
     public TreePath toTreePath(Preferences oPref) {
-        Stack oStack = new Stack();
+        Stack<Preferences> oStack = new Stack<>();
 
         while (oPref != null) {
             oStack.push(oPref);
             oPref = oPref.parent();
         }
-        //  oStack now contains all the nodes up the the root, except the root
+        //  oStack now contains all the nodes up to the root, except the root
         oStack.push(moRoot);
 
         // reverse the order of the stack elements
