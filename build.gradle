@@ -9,6 +9,9 @@ group = pGroup
 version = pVersion
 
 repositories {
+    maven {
+        url 'https://mvn.topobyte.de'
+    }
     mavenCentral()
 }
 
@@ -16,6 +19,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    implementation 'de.topobyte:shared-preferences:0.0.1'
     testImplementation("junit:junit:4.13.2")
 }
 

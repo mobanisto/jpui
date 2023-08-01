@@ -32,6 +32,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+
+import de.topobyte.shared.preferences.SharedPreferences;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -119,6 +122,9 @@ public class JPUI {
      * @param oArgs arguments to main
      */
     public static void main(String[] oArgs) {
+    	System.setProperty("sun.java2d.uiScale",
+				Double.toString(SharedPreferences.getUIScale()));
+    	
         final JPUI oPrefGUI = new JPUI();
         JPUI.getFrame().pack();
         JPUI.getFrame().setVisible(true);
