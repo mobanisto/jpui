@@ -2,11 +2,34 @@ wrapper {
     gradleVersion = '7.6.1'
 }
 
-apply plugin: 'java'
+buildscript {
+    repositories {
+        maven { url 'https://mvn.topobyte.de' }
+    }
+    dependencies {
+        classpath 'de.topobyte:gradle-launch-and-install-plugin:0.0.5'
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'de.topobyte.launch-and-install-gradle-plugin'
 apply plugin: 'eclipse'
 
 group = pGroup
 version = pVersion
+
+mainClassName = 'org.jpui.JPUI'
+
+startScripts.enabled = false
+
+launchAndInstall {
+    installationPath = 'mobanisto/jpui'
+    makeselfLabel = 'JPUI'
+    createScript(project, mainClassName, 'jpui')
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     maven {
@@ -14,9 +37,6 @@ repositories {
     }
     mavenCentral()
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
     implementation 'de.topobyte:shared-preferences:0.0.1'
