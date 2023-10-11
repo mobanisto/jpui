@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=JPUI
+Comment=Java Preferences User Interface
+Exec=/opt/jpui/bin/JPui
+Icon=/opt/jpui/lib/JPui.png
+Terminal=false
+Type=Application
+Categories=System;Utility
+MimeType=

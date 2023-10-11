@@ -1,7 +1,3 @@
-wrapper {
-    gradleVersion = '7.6.1'
-}
-
 buildscript {
     repositories {
         maven { url 'https://mvn.topobyte.de' }
@@ -9,6 +5,15 @@ buildscript {
     dependencies {
         classpath 'de.topobyte:gradle-launch-and-install-plugin:0.0.5'
     }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'de.mobanisto.pinpit'
+}
+
+wrapper {
+    gradleVersion = '7.6.1'
 }
 
 apply plugin: 'application'
@@ -56,4 +61,117 @@ task copyDeps(type: Copy) {
 
 task createRuntime(dependsOn: [copyJars, copyDeps]) {
     description 'Setup the execution environment for the main scripts'
+}
+
+configurations {
+    currentOs {
+        extendsFrom implementation
+    }
+    windowsX64 {
+        extendsFrom implementation
+    }
+    linuxX64 {
+        extendsFrom implementation
+    }
+    linuxArm64 {
+        extendsFrom implementation
+    }
+    macosX64 {
+        extendsFrom implementation
+    }
+    macosArm64 {
+        extendsFrom implementation
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            compileClasspath = configurations.currentOs
+            runtimeClasspath = configurations.currentOs
+        }
+    }
+}
+
+ext.versionCode = "1.0.0"
+
+pinpit.desktop {
+    application {
+        mainClass = mainClassName
+        nativeDistributions {
+            jvmVendor = "adoptium"
+            jvmVersion = "17.0.8.1+1"
+
+            packageVersion = versionCode
+            packageName = "JPui"
+            description = "Java Preferences User Interface"
+            copyright = "2023 Mobanisto"
+            vendor = "Mobanisto"
+
+            linux {
+                shortcut = true
+                packageName = "jpui"
+                debMaintainer = "sebastian@mobanisto.de"
+                debPackageVersion = versionCode
+                appCategory = "utils"
+                menuGroup = "System;Utility"
+                iconFile.set(project.file("src/main/packaging/linux/icon.png"))
+                debPreInst.set(project.file("src/main/packaging/linux/deb/preinst"))
+                debPostInst.set(project.file("src/main/packaging/linux/deb/postinst"))
+                debPreRm.set(project.file("src/main/packaging/linux/deb/prerm"))
+                debCopyright.set(project.file("src/main/packaging/linux/deb/copyright"))
+                debLauncher.set(project.file("src/main/packaging/linux/launcher.desktop"))
+                deb("UbuntuFocalX64") {
+                    qualifier = "ubuntu-20.04"
+                    arch = "x64"
+                    depends(
+                            "libc6", "libexpat1", "libgcc-s1", "libpcre3", "libuuid1", "xdg-utils",
+                            "zlib1g", "libnotify4"
+                    )
+                }
+                deb("DebianBullseyeX64") {
+                    qualifier = "debian-bullseye"
+                    arch = "x64"
+                    depends(
+                            "libasound2", "libbrotli1", "libc6", "libexpat1", "libfontconfig1",
+                            "libfreetype6", "libgcc-s1", "libglib2.0-0", "libgraphite2-3",
+                            "libharfbuzz0b", "libjpeg62-turbo", "liblcms2-2", "libpcre3",
+                            "libpng16-16", "libstdc++6", "libuuid1", "xdg-utils", "zlib1g",
+                            "libnotify4"
+                    )
+                }
+                distributableArchive {
+                    format = "tar.gz"
+                    arch = "arm64"
+                }
+            }
+            windows {
+                dirChooser = true
+                shortcut = true
+                menuGroup = "pinpit"
+                upgradeUuid = "1BD1E53C-04EA-4CDC-9E79-53E19A2ABC75"
+                packageVersion = versionCode
+                iconFile.set(project.file("src/main/packaging/windows/icon.ico"))
+                msi {
+                    arch = "x64"
+                    bitmapBanner.set(project.file("src/main/packaging/windows/banner.bmp"))
+                    bitmapDialog.set(project.file("src/main/packaging/windows/dialog.bmp"))
+                }
+            }
+            macOS {
+                packageName = "JPui"
+                iconFile.set(project.file("src/main/packaging/macos/icon.icns"))
+                bundleID = "de.mobanisto.jpui"
+                appCategory = "public.app-category.utilities"
+                distributableArchive {
+                    format = "zip"
+                    arch = "x64"
+                }
+                distributableArchive {
+                    format = "zip"
+                    arch = "arm64"
+                }
+            }
+        }
+    }
 }
