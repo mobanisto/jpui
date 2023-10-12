@@ -123,8 +123,10 @@ public class JPUI {
      * @param oArgs arguments to main
      */
     public static void main(String[] oArgs) {
-        SwingUtils.setUiScale(SharedPreferences.getUIScale());
-    	
+        if (SharedPreferences.isUIScalePresent()) {
+            SwingUtils.setUiScale(SharedPreferences.getUIScale());
+        }
+
         final JPUI oPrefGUI = new JPUI();
         JPUI.getFrame().pack();
         JPUI.getFrame().setVisible(true);

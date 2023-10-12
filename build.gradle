@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.topobyte:shared-preferences:0.0.1'
+    implementation 'de.topobyte:shared-preferences:0.1.0'
     implementation 'de.topobyte:swing-utils:0.0.13'
     testImplementation("junit:junit:4.13.2")
 }
