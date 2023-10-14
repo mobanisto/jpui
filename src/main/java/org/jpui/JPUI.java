@@ -28,6 +28,7 @@
 
 package org.jpui;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,6 +41,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * The one and only main program class.
@@ -128,6 +132,12 @@ public class JPUI {
         }
 
         final JPUI oPrefGUI = new JPUI();
+        try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("icon.png")) {
+            BufferedImage image = ImageIO.read(input);
+            JPUI.getFrame().setIconImage(image);
+        } catch (IOException e) {
+            // ignore, continue without icon
+        }
         JPUI.getFrame().pack();
         JPUI.getFrame().setVisible(true);
     }
