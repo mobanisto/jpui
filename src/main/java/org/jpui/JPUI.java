@@ -57,8 +57,8 @@ public class JPUI {
     private EditNodeView moEditNodeView;
 
     // gui parts
-    private static JFrame moFrame = null;
-    private static JPanel moContentPanel = null;
+    private JFrame moFrame = null;
+    private JPanel moContentPanel = null;
 
     public JPUI() {
         initialize();
@@ -112,14 +112,14 @@ public class JPUI {
     /**
      * @return javax.swing.JPanel
      */
-    public static JPanel getContentPanel() {
+    public JPanel getContentPanel() {
         return moContentPanel;
     }
 
     /**
      * @return javax.swing.JFrame
      */
-    public static JFrame getFrame() {
+    public JFrame getFrame() {
         return moFrame;
     }
 
@@ -136,11 +136,11 @@ public class JPUI {
         final JPUI oPrefGUI = new JPUI();
         try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("icon.png")) {
             BufferedImage image = ImageIO.read(input);
-            JPUI.getFrame().setIconImage(image);
+            oPrefGUI.getFrame().setIconImage(image);
         } catch (IOException e) {
             // ignore, continue without icon
         }
-        JPUI.getFrame().pack();
-        JPUI.getFrame().setVisible(true);
+        oPrefGUI.getFrame().pack();
+        oPrefGUI.getFrame().setVisible(true);
     }
 }
