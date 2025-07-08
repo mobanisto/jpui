@@ -87,8 +87,8 @@ configurations {
 sourceSets {
     main {
         java {
-            compileClasspath = configurations.currentOs
-            runtimeClasspath = configurations.currentOs
+            compileClasspath += configurations.currentOs
+            runtimeClasspath += configurations.currentOs
         }
     }
 }
@@ -100,12 +100,12 @@ pinpit.desktop {
         mainClass = mainClassName
         nativeDistributions {
             jvmVendor = "adoptium"
-            jvmVersion = "17.0.8.1+1"
+            jvmVersion = "17.0.15+6"
 
             packageVersion = versionCode
             packageName = "JPui"
             description = "Java Preferences User Interface"
-            copyright = "2023 Mobanisto"
+            copyright = "2023-2025 Mobanisto"
             vendor = "Mobanisto"
 
             linux {
@@ -126,7 +126,7 @@ pinpit.desktop {
                     arch = "x64"
                     depends(
                             "libc6", "libexpat1", "libgcc-s1", "libpcre3", "libuuid1", "xdg-utils",
-                            "zlib1g", "libnotify4"
+                            "zlib1g"
                     )
                 }
                 deb("DebianBullseyeX64") {
@@ -136,19 +136,24 @@ pinpit.desktop {
                             "libasound2", "libbrotli1", "libc6", "libexpat1", "libfontconfig1",
                             "libfreetype6", "libgcc-s1", "libglib2.0-0", "libgraphite2-3",
                             "libharfbuzz0b", "libjpeg62-turbo", "liblcms2-2", "libpcre3",
-                            "libpng16-16", "libstdc++6", "libuuid1", "xdg-utils", "zlib1g",
-                            "libnotify4"
+                            "libpng16-16", "libstdc++6", "libuuid1", "xdg-utils", "zlib1g"
                     )
                 }
                 distributableArchive {
                     format = "tar.gz"
                     arch = "arm64"
                 }
+                appImage {
+                    arch = "x64"
+                }
+                appImage {
+                    arch = "arm64"
+                }
             }
             windows {
                 dirChooser = true
                 shortcut = true
-                menuGroup = "pinpit"
+                menuGroup = "Mobanisto"
                 upgradeUuid = "1BD1E53C-04EA-4CDC-9E79-53E19A2ABC75"
                 packageVersion = versionCode
                 iconFile.set(project.file("src/main/packaging/windows/icon.ico"))
