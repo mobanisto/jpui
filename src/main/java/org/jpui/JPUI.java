@@ -127,6 +127,8 @@ public class JPUI {
      * @param oArgs arguments to main
      */
     public static void main(String[] oArgs) {
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+
         if (SharedPreferences.isUIScalePresent()) {
             SwingUtils.setUiScale(SharedPreferences.getUIScale());
         }
