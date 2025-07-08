@@ -79,7 +79,8 @@ public class JPUI {
         //
 
         // main frame
-        moFrame = new JFrame(Resources.getString("title_bar"));
+        String version = Version.getVersion();
+        moFrame = new JFrame(Resources.getString("title_bar") + " " + version);
         moFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         moFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent oEv) {
