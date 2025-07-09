@@ -30,6 +30,7 @@ package org.jpui;
 
 import org.jpui.observable.Observable;
 import org.jpui.observable.Observer;
+import org.jpui.preferences.Theme;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -48,6 +49,8 @@ public class MainView implements Observer, ActionListener {
 
     // menu action commands
     private static final String EXIT = "exit";
+    private static final String VIEW_LIGHT_MODE = "view_light_mode";
+    private static final String VIEW_DARK_MODE = "view_dark_mode";
     private static final String NODE_NEW = "node_new";
     private static final String NODE_DELETE = "node_delete";
     private static final String NODE_REFRESH = "node_refresh";
@@ -56,6 +59,7 @@ public class MainView implements Observer, ActionListener {
 
     // references to views which will perform the work
     // associated with the menu items
+    private final JPUI moJpui;
     private final TreeView moTreeView;
     private final EditNodeView moEditNodeView;
 
@@ -65,7 +69,8 @@ public class MainView implements Observer, ActionListener {
      * @param oTreeView     left side tree view
      * @param oEditNodeView right side edit node view
      */
-    public MainView(TreeView oTreeView, EditNodeView oEditNodeView) {
+    public MainView(JPUI oJpui, TreeView oTreeView, EditNodeView oEditNodeView) {
+        moJpui = oJpui;
         moTreeView = oTreeView;
         moEditNodeView = oEditNodeView;
         initMenu();
@@ -83,6 +88,18 @@ public class MainView implements Observer, ActionListener {
         oMenuItem.addActionListener(this);
         oMenu.add(oMenuItem);
 
+        moMenuBar.add(oMenu);
+
+        // set light/dark mode
+        oMenu = new JMenu(Resources.getString("menu_view"));
+        oMenuItem = new JMenuItem(Resources.getString("view_light_mode"));
+        oMenuItem.setActionCommand(VIEW_LIGHT_MODE);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
+        oMenuItem = new JMenuItem(Resources.getString("view_dark_mode"));
+        oMenuItem.setActionCommand(VIEW_DARK_MODE);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
         moMenuBar.add(oMenu);
 
         // add/delete nodes from current node
@@ -148,6 +165,12 @@ public class MainView implements Observer, ActionListener {
             moEditNodeView.newKey();
         } else if (e.getActionCommand().equals(KEY_DELETE)) {
             moEditNodeView.deleteKey();
+        } else if (e.getActionCommand().equals(VIEW_LIGHT_MODE)) {
+            moJpui.setTheme(Theme.LIGHT);
+            moJpui.updateTheme();
+        } else if (e.getActionCommand().equals(VIEW_DARK_MODE)) {
+            moJpui.setTheme(Theme.DARK);
+            moJpui.updateTheme();
         }
     }
 

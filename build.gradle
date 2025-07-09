@@ -51,6 +51,7 @@ generateVersionAccessSource {
 dependencies {
     implementation 'de.topobyte:shared-preferences:0.1.0'
     implementation 'de.topobyte:swing-utils:0.0.13'
+    implementation 'com.formdev:flatlaf:3.6'
     testImplementation("junit:junit:4.13.2")
 }
 

@@ -33,9 +33,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import de.topobyte.shared.preferences.SharedPreferences;
 import de.topobyte.swing.util.SwingUtils;
+import org.jpui.preferences.JPuiPreferences;
+import org.jpui.preferences.Theme;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -55,6 +62,7 @@ public class JPUI {
     private MainView moMainView;
     private TreeView moTreeView;
     private EditNodeView moEditNodeView;
+    private Theme theme;
 
     // gui parts
     private JFrame moFrame = null;
@@ -69,10 +77,13 @@ public class JPUI {
      * and UI components.
      */
     private void initialize() {
+        theme = JPuiPreferences.getTheme();
+        setLookAndFeel(false);
+
         // the views
         moTreeView = new TreeView();
         moEditNodeView = new EditNodeView();
-        moMainView = new MainView(moTreeView, moEditNodeView);
+        moMainView = new MainView(this, moTreeView, moEditNodeView);
 
         //
         // the gui
@@ -122,6 +133,34 @@ public class JPUI {
      */
     public JFrame getFrame() {
         return moFrame;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public void updateTheme() {
+        setLookAndFeel(true);
+        JPuiPreferences.setTheme(theme);
+    }
+
+    private void setLookAndFeel(boolean updateComponentTree) {
+        try {
+            if (theme == null || theme == Theme.LIGHT) {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } else if (theme == Theme.DARK) {
+                UIManager.setLookAndFeel(new FlatDarculaLaf());
+            }
+            if (updateComponentTree) {
+                SwingUtilities.updateComponentTreeUI(moFrame);
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            if (theme == Theme.LIGHT) {
+                System.err.println("Unable to set light LAF");
+            } else {
+                System.err.println("Unable to set dark LAF");
+            }
+        }
     }
 
     /**
