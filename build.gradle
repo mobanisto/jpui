@@ -52,6 +52,8 @@ dependencies {
     implementation 'de.topobyte:shared-preferences:0.1.0'
     implementation 'de.topobyte:swing-utils:0.0.13'
     implementation 'com.formdev:flatlaf:3.6'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    implementation 'org.slf4j:slf4j-jdk14:2.0.17'
     testImplementation("junit:junit:4.13.2")
 }
 
