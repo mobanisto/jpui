@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
@@ -71,6 +72,14 @@ public class EditNodeView implements Observer {
      */
     private void renderTable() {
         Preferences oPref = PreferencesModel.Instance().getCurrentNode();
+        try {
+            // Make sure to sync from the backing store to see updates made
+            // to the store by different applications and don't see just our
+            // cached version.
+            oPref.sync();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
 
         moPanel.remove(moTable.getTableHeader());
         moPanel.remove(moTable);

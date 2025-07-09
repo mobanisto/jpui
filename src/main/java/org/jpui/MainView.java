@@ -36,6 +36,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 /**
  * View that is responsible for menu commands.
@@ -49,6 +50,7 @@ public class MainView implements Observer, ActionListener {
     private static final String EXIT = "exit";
     private static final String NODE_NEW = "node_new";
     private static final String NODE_DELETE = "node_delete";
+    private static final String NODE_REFRESH = "node_refresh";
     private static final String KEY_NEW = "key_new";
     private static final String KEY_DELETE = "key_delete";
 
@@ -93,6 +95,10 @@ public class MainView implements Observer, ActionListener {
         oMenuItem.setActionCommand(NODE_DELETE);
         oMenuItem.addActionListener(this);
         oMenu.add(oMenuItem);
+        oMenuItem = new JMenuItem(Resources.getString("node_refresh"));
+        oMenuItem.setActionCommand(NODE_REFRESH);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
         moMenuBar.add(oMenu);
 
         // add/delete keys on current node
@@ -127,6 +133,17 @@ public class MainView implements Observer, ActionListener {
             moTreeView.newNode();
         } else if (e.getActionCommand().equals(NODE_DELETE)) {
             moTreeView.deleteNode();
+        } else if (e.getActionCommand().equals(NODE_REFRESH)) {
+            // Perform an update twice with a new PreferenceNode to work around
+            // caching quirks.
+            Preferences current = PreferencesModel.Instance().getCurrentNode();
+            Preferences root = current.isUserNode() ?
+                    Preferences.userRoot() : Preferences.systemRoot();
+            Preferences copy = root.node(current.absolutePath());
+            PreferencesModel.Instance().setCurrentNode(new PreferencesNode(copy));
+            moEditNodeView.update(null);
+            PreferencesModel.Instance().setCurrentNode(current);
+            moEditNodeView.update(null);
         } else if (e.getActionCommand().equals(KEY_NEW)) {
             moEditNodeView.newKey();
         } else if (e.getActionCommand().equals(KEY_DELETE)) {
