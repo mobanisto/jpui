@@ -28,6 +28,8 @@
 
 package org.jpui;
 
+import org.jpui.about.AboutDialog;
+import org.jpui.about.AboutPanel;
 import org.jpui.observable.Observable;
 import org.jpui.observable.Observer;
 import org.jpui.preferences.Theme;
@@ -48,6 +50,7 @@ public class MainView implements Observer, ActionListener {
     private JMenuBar moMenuBar;
 
     // menu action commands
+    private static final String ABOUT_LICENSE = "about_license";
     private static final String EXIT = "exit";
     private static final String VIEW_LIGHT_MODE = "view_light_mode";
     private static final String VIEW_DARK_MODE = "view_dark_mode";
@@ -83,11 +86,14 @@ public class MainView implements Observer, ActionListener {
     protected void initMenu() {
         moMenuBar = new JMenuBar();
         JMenu oMenu = new JMenu(Resources.getString("menu_file"));
-        JMenuItem oMenuItem = new JMenuItem(Resources.getString("file_exit"));
+        JMenuItem oMenuItem = new JMenuItem(Resources.getString("file_about"));
+        oMenuItem.setActionCommand(ABOUT_LICENSE);
+        oMenuItem.addActionListener(this);
+        oMenu.add(oMenuItem);
+        oMenuItem = new JMenuItem(Resources.getString("file_exit"));
         oMenuItem.setActionCommand(EXIT);
         oMenuItem.addActionListener(this);
         oMenu.add(oMenuItem);
-
         moMenuBar.add(oMenu);
 
         // set light/dark mode
@@ -146,6 +152,8 @@ public class MainView implements Observer, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(EXIT)) {
             System.exit(0);
+        } else if (e.getActionCommand().equals(ABOUT_LICENSE)) {
+            AboutDialog.showDialog(AboutDialog.PAGE_ABOUT);
         } else if (e.getActionCommand().equals(NODE_NEW)) {
             moTreeView.newNode();
         } else if (e.getActionCommand().equals(NODE_DELETE)) {
