@@ -38,10 +38,10 @@ import java.util.prefs.Preferences;
 /**
  * Class that helps implement TreeModel for java preferences by
  * creating a virtual root node with the User preference tree
- * and System preference tree is its only two children.
+ * and System preference tree as its only two children.
  */
 public class RootPreferencesNode extends Preferences {
-    // contants
+    // constants
     private static final int USER = 0;
     private static final int SYSTEM = 1;
 

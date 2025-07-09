@@ -42,7 +42,7 @@ import java.util.prefs.Preferences;
  * done.  Uses the Observer pattern to notify the views when the
  * model changes.
  * This singleton class effectively adds the idea of a 'current node' to the
- * java preferences node heirarchy.
+ * java preferences node hierarchy.
  */
 public class PreferencesModel
         extends Observable
