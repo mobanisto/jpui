@@ -56,8 +56,8 @@ public class MainView implements Observer, ActionListener {
 
     // references to views which will perform the work
     // associated with the menu items
-    private TreeView moTreeView;
-    private EditNodeView moEditNodeView;
+    private final TreeView moTreeView;
+    private final EditNodeView moEditNodeView;
 
     /**
      * ctor

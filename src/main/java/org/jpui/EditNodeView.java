@@ -44,7 +44,7 @@ import java.util.prefs.Preferences;
  * the current preference node.
  */
 public class EditNodeView implements Observer {
-    private JPanel moPanel;
+    private final JPanel moPanel;
     private JTable moTable;
 
     /**

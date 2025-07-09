@@ -38,7 +38,7 @@ public class Resources {
     // application resource bundle
     private static ResourceBundle moBundle;
     // singleton instance
-    private static Resources moInstance = new Resources();
+    private static final Resources moInstance = new Resources();
 
     /**
      * private ctor

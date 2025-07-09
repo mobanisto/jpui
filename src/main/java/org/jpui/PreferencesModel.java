@@ -48,7 +48,7 @@ public class PreferencesModel
         extends Observable
         implements NodeChangeListener, PreferenceChangeListener {
     // singleton instance
-    private static PreferencesModel moInstance = new PreferencesModel();
+    private static final PreferencesModel moInstance = new PreferencesModel();
     // reference to the current preferences node
     Preferences moCurrentNode = null;
 

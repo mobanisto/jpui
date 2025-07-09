@@ -78,10 +78,7 @@ public class TreeView implements Observer, TreeModelListener {
                     return;
 
                 // update the current node
-                if (oNode instanceof Preferences) {
-                    PreferencesModel.Instance().setCurrentNode(
-                            ((Preferences) oNode));
-                }
+                PreferencesModel.Instance().setCurrentNode(oNode);
             }
         });
 

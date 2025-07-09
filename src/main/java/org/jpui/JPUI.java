@@ -136,8 +136,10 @@ public class JPUI {
 
         final JPUI oPrefGUI = new JPUI();
         try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("icon.png")) {
-            BufferedImage image = ImageIO.read(input);
-            oPrefGUI.getFrame().setIconImage(image);
+            if (input != null) {
+                BufferedImage image = ImageIO.read(input);
+                oPrefGUI.getFrame().setIconImage(image);
+            }
         } catch (IOException e) {
             // ignore, continue without icon
         }

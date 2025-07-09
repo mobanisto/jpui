@@ -90,7 +90,7 @@ public class PreferencesNode extends Preferences {
      */
     public String toString() {
         if (moPref.parent() == null) {
-            if (moPref.isUserNode() == true) {
+            if (moPref.isUserNode()) {
                 return "User";
             } else {
                 return "System";

@@ -39,7 +39,7 @@ public class PreferencesNodeTable extends AbstractTableModel {
     private Preferences moPref;
 
     // column headings for table
-    private static String[] msColumns =
+    private static final String[] msColumns =
             {
                     Resources.getString("edit_node_key"),
                     Resources.getString("edit_node_value")};
