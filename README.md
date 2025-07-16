@@ -4,6 +4,9 @@ Java Preferences Browser. Java/Swing based tool to browse and edit java preferen
 
 Original project site from 2003/2004: <https://jpui.sourceforge.net/>
 
+![Screenshot showing jpui in light mode](screenshot-light.png)
+![Screenshot showing jpui in dark mode](screenshot-dark.png)
+
 ## Usage
 
 ### Download and run a binary
